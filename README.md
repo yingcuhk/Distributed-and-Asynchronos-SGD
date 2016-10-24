@@ -11,9 +11,9 @@ The main idea comes from a recent paper by Professor Mengdi Wang in Princeton:
 
 **distance from the current value of optimization varaible to ground truth**
 
-<img src="figs/Distance2Optimal.png" width="500">
+<img src="fig/Distance2Optimal.png" width="500">
 
 **prediction error rate by current value of optimization variable**
 (the error rate will be 0.9 by randomly guessing)
 
-<img src="figs/ErrorRate.png" width="500">
+<img src="fig/ErrorRate.png" width="500">
