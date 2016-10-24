@@ -29,13 +29,14 @@ def SGD():
 	Y_test = np.argmax(temp, axis = 1) 
 	
 	# train dataset
-	N_train = 10000
+	N_train = 500000
+	"""
 	X_train= np.random.randn(N_train,M)
 	add_1s = np.ones((N_train,1))
 	X_train = np.concatenate((X_train,add_1s),axis = 1)
 	temp = np.dot(X_train, Beta)
 	Y_train = np.argmax(temp, axis = 1) 
-	
+	"""
 	graph = tf.Graph()
 	Mile = 1
 	S = 1
@@ -58,12 +59,20 @@ def SGD():
 		Dist = []
 		Error = []
 		L = 1 # size of each batch
-		for k in xrange(N_train):
+		for k in xrange(N_train*2):
+			"""
 			t = k % N_train
+
 			end = min(t+L,N_train)
 			x_sample = X_train[t:end,:]
 			y_val = Y_train[t:end]
-			y_sample = np.zeros((end-t,K), dtype = np.float32)
+			"""
+			y_sample = np.zeros((L,K), dtype = np.float32)
+			x_sample = np.random.randn(L,M)
+			add_1s = np.ones((L,1))
+			x_sample = np.concatenate((x_sample,add_1s),axis = 1)
+			temp = np.dot(x_sample, Beta)
+			y_val = np.argmax(temp, axis = 1) 
 			for l, y_val_l in enumerate(y_val):
 				y_sample[l,y_val_l] = 1.0
 			Dict = {Train_F:x_sample,beta:beta_cur, Train_L:y_sample}
