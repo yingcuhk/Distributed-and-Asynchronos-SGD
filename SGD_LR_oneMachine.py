@@ -1,7 +1,7 @@
 import os
 import tensorflow as tf
 import numpy as np
-from math import sqrt
+from math import sqrt, pow
 
 def SGD():
 
@@ -19,7 +19,7 @@ def SGD():
 	Y_test = np.argmax(temp, axis = 1) 
 	
 	# train dataset
-	N_train = 5000
+	N_train = 10000
 	X_train= np.random.randn(N_train,M)
 	add_1s = np.ones((N_train,1))
 	X_train = np.concatenate((X_train,add_1s),axis = 1)
@@ -44,30 +44,29 @@ def SGD():
 	
 		errorRate = 0.5	
 
-		L = 5 # size of each batch
-		for k in xrange(N_train*10):
+		L = 2 # size of each batch
+		for k in xrange(N_train*50):
 			t = k % N_train
-			x_sample = X_train[t:t+L,:]
-			y_val = Y_train[t:t+L]
-			y_sample = np.zeros((L,K), dtype = np.float32)
-			print y_val
+			end = min(t+L,N_train)
+			x_sample = X_train[t:end,:]
+			y_val = Y_train[t:end]
+			y_sample = np.zeros((end-t,K), dtype = np.float32)
 			for l, y_val_l in enumerate(y_val):
 				y_sample[l,y_val_l] = 1.0
-			print y_sample
 			Dict = {Train_F:x_sample,beta:beta_cur, Train_L:y_sample}
 			g = sess.run(grad, feed_dict = Dict)
 			g = g[0]
 			#stepsize = 1.0/sqrt(k+1.0)
 			#stepsize = min(1.0/(k/10+1.0),0.1)
-			stepsize = 0.001
+			#stepsize = 0.001
 			#stepsize = 1.0/sqrt(k+1.0)
-			#stepsize = 1.0/(k+1.0)
+			stepsize = 1.0/(pow((k+1.0), 0.6))
 			beta_cur = beta_cur - stepsize * g
-			if t % 100 == 0:
+			if k % 500 == 0:
 				Dict = {Train_F:x_sample,beta:beta_cur, Train_L:y_sample}
 				pre_cur = sess.run(predict, Dict)	
 				errorRate = np.mean(pre_cur != Y_test)
-				print "error rate: ", errorRate, "distance to optima: ", np.linalg.norm(beta_cur - Beta_real)
+				print k, " error rate: ", errorRate, "distance to optima: ", np.linalg.norm(beta_cur - Beta_real)
 
 		#print beta_cur
 		#	print type(g)
