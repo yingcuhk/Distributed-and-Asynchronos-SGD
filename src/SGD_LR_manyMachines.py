@@ -16,13 +16,13 @@ def plot_sgd(x,y, name = "SGD"):
 def SGD(Num_Nodes = 9,verbose = False):
 
 
-	Noise = 0.12
+	Noise = 0.1
 	M = 100
-	K = 10
+	K = 20 
 	Beta_real = np.random.randn(M+1,K)
 	
 	# test dataset
-	N_test = 1000
+	N_test = 2000
 	X_test = np.random.randn(Num_Nodes,N_test,M)
 	Y_test = np.zeros((Num_Nodes,N_test))
 
@@ -37,7 +37,7 @@ def SGD(Num_Nodes = 9,verbose = False):
 	X_test_All = X_test.reshape(N_test*Num_Nodes, M+1)
 	Y_test_All = Y_test.reshape(N_test*Num_Nodes)	
 	# train dataset
-	N_train = 5000
+	N_train = 500
 	
 	graph = tf.Graph()
 	Mile = 1
