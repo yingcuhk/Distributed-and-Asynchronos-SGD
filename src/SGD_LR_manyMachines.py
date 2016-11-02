@@ -2,10 +2,10 @@ import os
 import tensorflow as tf
 import numpy as np
 from math import sqrt, pow
+import plotly.plotly as py
+import plotly.graph_objs as go
 
 def plot_sgd(x,y, name = "SGD"):
-	import plotly.plotly as py
-	import plotly.graph_objs as go
 	#data = []
 	data = [go.Scatter(x = x, y = y, name = name)]
 	layout = go.Layout(xaxis = dict(type = 'log', autorange = True),yaxis = dict(autorange=True))
@@ -17,8 +17,8 @@ def SGD(Num_Nodes = 9,verbose = False):
 
 
 	Noise = 0.1
-	M = 100
-	K = 20 
+	M = 500
+	K = 10 
 	Beta_real = np.random.randn(M+1,K)
 	
 	# test dataset
@@ -134,7 +134,7 @@ def SGD(Num_Nodes = 9,verbose = False):
 		plot_sgd(X_step, Error, name = "error rate")
 		plot_sgd(X_step, Dist, name = "distance to optima")
 		"""
-		
+	return Error[-1]		
 		#print beta_cur
 		#	print type(g)
 		#	print np.array(g,dtype = np.float32).shape, beta_cur.shape
@@ -143,12 +143,20 @@ def SGD(Num_Nodes = 9,verbose = False):
 
 if __name__== "__main__":
 
-	k = 1	
+	k = 1
+	Error = []
+	Num_Nodes = []	
 	while k <= 30:
-		SGD(Num_Nodes = k)
-		k += 5		
+		Num_Nodes.append(k)
+		Error.append(SGD(Num_Nodes = k))
+		k += 3		
 
+	
+	name = "Prediction Error vs Number of Machines"
+	data = [go.Scatter(x = Num_Nodes, y = Error, name = name )]
+	layout = go.Layout(xaxis = dict(autorange = True),yaxis = dict(autorange=True))
+	fig = go.Figure(data = data, layout = layout)
 
-
+	py.plot(fig,filename = name)	
 
 
