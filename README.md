@@ -17,3 +17,13 @@ The main idea comes from a recent paper by Professor Mengdi Wang in Princeton:
 (the error rate will be 0.9 by randomly guessing)
 
 <img src="fig/ErrorRate.png" width="500">
+
+
+## Multiple Machine Mode
+
+A toy example:
+  Each machine stores 500 samples. 
+  
+**The machines form a circle and each machine can only talk to its two neighbors**
+
+<img src="fig/DiffNumMachines.png" width="500">
