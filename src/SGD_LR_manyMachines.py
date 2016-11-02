@@ -71,7 +71,8 @@ def SGD(Num_Nodes = 9,verbose = False):
 			if Num_Nodes == 1:
 				node_neighbors = []
 			else:
-				node_neighbors = [(node+i)%Num_Nodes for i in xrange(Num_Nodes // 3)]
+				#node_neighbors = [(node+i)%Num_Nodes for i in xrange(Num_Nodes // 3)]
+				node_neighbors = [(node+1)%Num_Nodes, (node-1)%Num_Nodes]
 			if np.random.rand() < 0.8:
 				beta_cur = Beta_cur_All[node]
 				y_sample = np.zeros((L,K), dtype = np.float32)
@@ -141,7 +142,13 @@ def SGD(Num_Nodes = 9,verbose = False):
 
 
 if __name__== "__main__":
-	SGD(Num_Nodes = 1)
-	SGD(Num_Nodes = 3)
-	SGD(Num_Nodes = 9)
-	SGD(Num_Nodes = 15)
+
+	k = 1	
+	while k <= 30:
+		SGD(Num_Nodes = k)
+		k += 5		
+
+
+
+
+
